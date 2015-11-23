@@ -1,0 +1,70 @@
+.av-list {
+  //background:@primary-background;
+  color:@text;  
+  .av-stretch;
+  .av-noselection;
+}
+
+.av-list .items {
+  background:@background;
+  color:@text;  
+  min-height:30px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  .av-stretch;
+}
+
+.av-list .icons {
+  height:20px;
+  //text-align:right;
+  color:@text;
+  .av-stretch;
+}
+
+.av-list .items .item {
+  font-weight:100;
+  font-size:12px;
+  padding:4px;  
+  height:20px;
+  border-bottom:1px solid @background;
+  .av-transition;
+}
+
+.av-list .items .item-selected {
+  background:@highlight-background !important;
+  color:@highlight-text !important;
+}
+
+.av-list .items .item .title {
+  float:left;
+}
+
+.av-list .items .item .left {
+  float: left;
+  width:20px;
+  height:20px;
+  margin-right:4px;
+}
+
+.av-list .items .item .right {
+  float:right;
+  margin-left:4px;
+  height: 20px;
+  text-align: right;
+}
+
+.av-list .items .item:hover {
+  background:@highlight-background;
+  color:@highlight-text; 
+}
+
+.av-list .icon {
+  margin:4px;
+  .av-transition;
+  .av-noselection;
+  //color:@secondary-color;
+}
+
+.av-list .icon:hover {
+  color:@accent;  
+}

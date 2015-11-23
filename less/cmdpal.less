@@ -1,0 +1,52 @@
+.av-cmd-pal {
+
+  position: fixed;
+  top:40px;
+  width:400px;
+  left:50%;
+  margin-left:-200px;
+  min-height:20px;
+  z-index: 4;
+  background:@highlight-background;
+  color:@highlight-text;
+  padding:2px;
+  border:1px solid darken(@highlight-background, 20);
+  pointer-events: none;
+  opacity:0;
+}
+
+.av-cmd-pal .item {
+  padding:4px;
+  width:100%;
+  .av-box-size;
+}
+
+.av-cmd-pal input {
+
+  background:@highlight-background;
+  color:@highlight-text;
+  border:none;
+  width:100%;
+  outline:none;
+  .av-box-size;
+}
+
+.av-cmd-pal .results {
+  .av-noselection;
+  max-height:300px;
+  overflow-y:auto;
+}
+
+.av-cmd-pal .match {
+  color: @accent;
+}
+
+.av-cmd-pal .active {
+  background: @background;
+  //color:@highlight-text;
+}
+
+.av-cmd-pal .item:hover {
+  
+  background: @background;
+}

@@ -1,0 +1,105 @@
+.av-window {
+  min-height:100px;
+  width:300px;
+  height:200px;  
+  background:@dim-background;
+  color:@text;
+  .av-box-size;
+}
+
+.av-window-docked {
+  margin-top:10px;
+  position:relative;
+  .av-stretch;
+}
+
+.av-window-undocked {
+  position:fixed;
+  border:1px solid @dim-background;
+  z-index:10;
+}
+
+.av-window .titlebar {
+  width:100%;
+  height:24px;
+  position:relative;
+  .av-noselection;
+  cursor:move !important;
+  .av-box-size;
+}
+
+.av-window .titlebar .title {
+  width:100%;
+  text-align: center;
+  font-weight: 100;
+}
+
+.av-window .titlebar .close {
+  position: absolute;
+  top:2px;
+  right:2px;
+  width:10px;
+  height:10px;
+  border-radius:100%;
+  background:@cancel;
+  color:@cancel-text;
+  text-align:center;
+  font-size:10px;
+  cursor:default !important;
+}
+
+.av-window .body {
+  padding:4px;
+  .av-box-size;
+}
+
+.av-window .titlebar .close:hover:before {
+  content: "";
+}
+
+.av-window .titlebar .undock {
+  position: absolute;
+  top:2px;
+  right:15px;
+  width:10px;
+  height:10px;
+  border-radius:100%;
+  background:@ok;
+  color:@ok-text;
+  text-align:center;
+  font-size:10px;
+  cursor:default !important;
+}
+
+.av-window .titlebar .undock:hover:before {
+  content: "";
+}
+
+.av-window .resizer {
+  position:absolute;
+  right:0px;
+  bottom:0px;
+  width:10px;
+  height:10px;
+  cursor:nw-resize;
+  //background-color:#FF00FF;
+  border-top-left-radius: 100%;
+  border-left:2px solid @dim-background;
+  border-top:2px solid @dim-background;
+ // border-bottom-left-radius: 100%;
+}
+
+.av-window .resizer-docked {
+  position:absolute;
+  left:0px;
+  bottom:0px;
+  background:@dim-background, 20;
+  //color:mix(@secondary-color, @secondary-background, 30);
+  //border-top:1px solid darken(@secondary-background, 10);
+  //border-bottom:1px solid darken(@secondary-background, 10);
+  height:15px;
+  text-align: center;
+  padding:0px;
+  cursor:ns-resize;
+  .av-stretch;
+}

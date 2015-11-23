@@ -1,0 +1,72 @@
+.av-tree {
+  background:@background;
+  color:@text;
+  min-width:100px;
+  overflow:hidden;
+  width:100%;
+  //height:100%;
+  font-weight:100;
+  font-size:14px;
+  .av-noselection;
+  .av-box-size;
+  .av-transition;
+}
+
+.av-tree .child {
+  position:relative;
+  height:20px;
+  padding:4px;
+  .av-transition;
+}
+
+.av-tree .child:hover {
+  background:@highlight-background;
+  color:@highlight-text;
+}
+
+.av-tree .child.highlight {
+  //background:@highlight-background;
+  color:@highlight-text;
+  font-weight:400;
+}
+
+.av-tree .child .expander {
+  padding-right:4px;  
+  .av-transition;
+}
+
+.av-tree .child .icons {
+  position:absolute;
+  opacity: 0;
+  right:5px;
+  top:5px;
+  width:100px;
+  text-align:right;
+  .av-transition;
+}
+
+.tree .child .icons .icon {
+  color:@dim-text;
+  margin-left:6px;
+  .av-transition;
+}
+
+.av-tree .child .icons .icon:hover {
+  color:@text;
+}
+
+.av-tree .child .adder {
+  float:right;
+  color:@dim-text;
+}
+
+.av-tree .child .adder:hover {
+  color:@text;
+}
+
+.av-tree .children {
+  position:relative;
+  padding-left:20px;
+  overflow:hidden;
+  .av-transition;
+}

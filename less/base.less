@@ -1,0 +1,126 @@
+.av-noselection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor:default !important;
+}
+
+html, body {
+  font-size:100%;
+  font-family: @font;
+  background: @background;
+  color: @text;
+  width:100%;
+  height:100%;
+  margin:0px;
+  padding:0px;
+  .av-noselection;
+}
+
+.av-box-size {
+  box-sizing:border-box !important;
+  -moz-box-sizing:border-box !important;
+  -webkit-box-sizing:border-box !important;
+}
+
+.av-transition {
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+.av-transition-opacity {
+  transition:0.2s ease opacity; 
+  -moz-transition:0.2s ease opacity; 
+  -webkit-transition:0.2s ease opacity;
+}
+
+.av-link {
+  text-decoration:none;
+  border-bottom:1px dashed @text;
+  color: @text;
+}
+
+.av-link:hover {
+  color:@link;
+  border-bottom:1px solid @text;
+}
+
+
+.av-stretch {
+  width:100%;
+  .av-box-size;
+}
+
+.av-ok-text {
+  color:@ok;
+}
+
+.av-prettyscroll::-webkit-scrollbar {
+  height: 11px;
+  width: 11px;
+  background: none;
+  border:none;
+}
+
+.av-prettyscroll::-webkit-scrollbar-thumb {
+  border:none;
+  margin:1px;
+
+  background: @dim-background;
+  -webkit-border-radius: 5ex;
+  -webkit-box-shadow: none;/*0px 1px 2px rgba(0, 0, 0, 0.75);*/
+
+  .av-transition;
+}
+
+.av-prettyscroll::-webkit-scrollbar-thumb:hover {
+  background:@highlight-background;
+}
+
+.av-prettyscroll::-webkit-scrollbar-corner {
+  background: @background;
+}
+
+.av-ok-btn {
+  color:@ok-text;
+  background:@ok;
+  padding:4px;
+  border:none;
+  margin-right:4px;
+  font-size:16px;
+  outline: none;
+}
+
+.av-cancel-btn {
+  color:@cancel-text;
+  background:@cancel;
+  padding:4px;
+  border:none;
+  margin-right:4px;
+  font-size:16px;
+  outline: none;
+}
+
+.av-main-colors {
+  background:@background;
+  color:@text;
+}
+
+.av-dim-colors {
+  background:@dim-background;
+  color:@dim-text;
+}
+
+@import "snackbar.less";
+@import "ctxmenu.less";
+@import "filemenu.less";
+@import "tabctrl.less";
+@import "pgrid.less";
+@import "list.less";
+@import "window.less";
+@import "cmdpal.less";
+@import "tree.less";

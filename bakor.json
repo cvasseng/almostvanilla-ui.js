@@ -1,0 +1,20 @@
+{
+  "name": "av.ui",
+  "outputDir": "./build",
+  "dependencies":[],
+  "js":[
+    "src/av.ui.snackbar.js",
+    "src/av.ui.ctxmenu.js",
+    "src/av.ui.fmenu.js",
+    "src/av.ui.tabcontrol.js",
+    "src/av.ui.pgrid.js",
+    "src/av.ui.list.js",
+    "src/av.ui.window.js",
+    "src/av.ui.cmdpal.js",
+    "src/av.ui.tree.js"
+  ],
+  "css":[],
+  "less":[
+    "less/light.less"
+  ]
+}

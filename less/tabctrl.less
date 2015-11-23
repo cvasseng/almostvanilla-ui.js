@@ -1,0 +1,53 @@
+.av-tabctrl {
+  .av-noselection;
+}
+
+.av-tabctrl .tabs {
+  background-color: @dim-background;
+  color:@dim-text;
+  position:relative;
+  font-size:20px;
+  height:40px;
+  overflow:hidden;
+  .av-stretch;
+}
+
+.av-tabctrl .tab-bodies {
+  width:100%;
+  height:100%;
+  .av-box-size;
+}
+
+.av-tabctrl .tab {
+  font-weight:100;
+  float:left;
+  padding:4px;
+  margin-right:5px;
+  min-width: 80px;
+  text-align: center;
+  height:100%;
+  .av-box-size;
+}
+
+.av-tabctrl .tab-selected {
+  font-weight:400;
+  padding-left:2px;
+  padding-right:2px;
+  //background: @accent;
+  color: @highlight-text;
+}
+
+.av-tabctrl .tab-body {
+  width:100%;
+  height:100%;
+  .av-box-size;
+}
+
+.av-tabctrl .tab-marker {
+  height:4px;
+  width:10px;
+  left:0px;
+  bottom:0px;
+  position:absolute;
+  background:@accent;
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Samples</title>
+    
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/css/light.css">
+     
+    <script type="text/javascript" src="av.min.js"></script>
+    <script type="text/javascript" src="src/av.ui.snackbar.js"></script>
+    <script type="text/javascript" src="src/av.ui.ctxmenu.js"></script>
+    <script type="text/javascript" src="src/av.ui.fmenu.js"></script>
+    <script type="text/javascript" src="src/av.ui.tabcontrol.js"></script>
+    <script type="text/javascript" src="src/av.ui.pgrid.js"></script>
+    <script type="text/javascript" src="src/av.ui.list.js"></script>
+    <script type="text/javascript" src="src/av.ui.window.js"></script>
+    <script type="text/javascript" src="src/av.ui.cmdpal.js"></script>
+    <script type="text/javascript" src="src/av.ui.tree.js"></script>
+     
+  </head>
+  <body>
+  
+    <div id="fmenu" class="av-dim-colors av-stretch">
+      #
+    </div>
+  
+  </body>
+  
+  <script>
+  
+  var ctx = av.ContextMenu([
+    {
+      foo: {
+        title: "foo"
+      },
+      bar: {
+        title: "bar"
+      }
+    }
+    
+  ]);
+  
+  av.FileMenu({
+    "File": {
+      children: [
+        {
+          "Open": {
+            click: function () {
+              av.SnackBar("Hello world!", "ACTION");
+            }
+          },
+          "Save": {
+            
+          }
+        }
+      ]
+    }
+  }, "fmenu");
+  
+  var tabs = av.TabControl(document.body);
+  
+  var t1 = tabs.addTab({title: "Property Grid"}),
+      t2 = tabs.addTab({title: "Tree"}),
+      inspectableObject = {
+        foo: 'hello',
+        bar: 'world'
+      },
+      win = av.Window({
+        title: 'Window with list'
+      }),
+      list = av.List(win.body),
+      tree = av.Tree(t2.body)
+  ;
+  
+  av.PropertyGrid(t1.body, av.PGRID_TABLE).inspect(
+    inspectableObject,
+    {
+      foo: {
+        title: 'Foo Field',
+        type: 'dropdown',
+        options: [
+          {id: 1, title: "Option 1"},
+          {id: 2, title: "Option 2"},
+          {id: 3, title: "Option 3"}
+        ]
+      },
+      bar: {
+        title: "Bar Field"
+      }
+    },
+    function () {
+      av.SnackBar('inspectableobject was changed!');
+    }
+  );
+  
+  list.addItems([
+    {title: 'Item 1'},
+    {title: 'Item 2'},
+    {title: 'Item 3'},
+    {title: 'Item 4'},
+    {title: 'Item 5'}
+    
+  ]);
+  
+  tree.load([
+    {
+      title: 'Root 1',
+      children: [
+        {title: 'Child 1'},
+        {
+          title: 'Child 2',
+          children: [
+            {title: 'Subchild 1'},
+            {title: 'Subchild 2'},
+            {title: 'Subchild 3'},
+            {title: 'Subchild 4'}
+          ]
+        },
+        {title: 'Child 3'},
+        {title: 'Child 4'},
+        {title: 'Child 5'}
+      ]
+    },
+    {
+      title: 'Root 2',
+      children: [
+        {title: 'Child 1'},
+        {title: 'Child 2'},
+        {title: 'Child 3'},
+        {title: 'Child 4'},
+        {title: 'Child 5'}
+      ]
+    }
+  ]);
+  
+  win.on('Show', list.resize);
+  
+  tabs.addTab({title: "Tab 2"}).body.innerHTML = 'tab 2!';
+  tabs.addTab({title: "Tab 3"}).body.innerHTML = 'tab 3!';
+  tabs.addTab({title: "Tab with huge caption"}).body.innerHTML = 'tab4!';
+  tabs.addTab({title: "Tab 4"}).body.innerHTML = 'tab5!';
+ 
+  //Register a couple of commands
+  av.RegCommand('foobar', function () {
+    
+  });
+  
+  av.RegCommand('sayhello', function () {
+    av.SnackBar('hello world!');
+  });
+    
+  </script>
+  
+</html>

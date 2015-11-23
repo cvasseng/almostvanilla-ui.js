@@ -1,0 +1,50 @@
+.av-context-frame {
+  position:fixed;
+  z-index:10;
+  pointer-events: none;
+  opacity:0;
+  background:@background;
+  color:@text;
+  border:1px solid @dim-background;
+}
+
+.av-context-frame .item {
+  padding:5px;
+  font-size:12px;
+  font-weight:100;
+  .av-noselection;
+}
+
+.av-context-frame .item:hover {
+  color:@highlight-text;
+  background:@highlight-background;
+}
+
+.av-context-frame .item .licon {
+  display:inline-block;
+  width:20px;
+}
+
+.av-context-frame .item .ricon {
+  display:inline-block;
+  float:right;
+  min-width:25px;
+  text-align: right;
+  //margin-left:4px;
+  //font-size: 8px;
+  font-weight: 100;
+  line-height: 15px;
+}
+
+.av-context-frame .title {
+  margin-right:8px;
+}
+
+.av-context-frame .separator {
+  background: darken(@dim-background, 10);
+  height:1px;
+  width:90%;
+  margin-left:5%;
+  margin-top:4px;
+  margin-bottom:4px;
+}
