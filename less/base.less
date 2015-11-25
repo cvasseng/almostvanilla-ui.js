@@ -71,7 +71,8 @@ html, body {
   margin:1px;
 
   background: @dim-background;
-  -webkit-border-radius: 5ex;
+  border:@dim-border;
+  -webkit-border-radius: 2ex;
   -webkit-box-shadow: none;/*0px 1px 2px rgba(0, 0, 0, 0.75);*/
 
   .av-transition;
@@ -79,30 +80,12 @@ html, body {
 
 .av-prettyscroll::-webkit-scrollbar-thumb:hover {
   background:@highlight-background;
+  border:@highlight-border;
 }
 
 .av-prettyscroll::-webkit-scrollbar-corner {
+  border:@border;
   background: @background;
-}
-
-.av-ok-btn {
-  color:@ok-text;
-  background:@ok;
-  padding:4px;
-  border:none;
-  margin-right:4px;
-  font-size:16px;
-  outline: none;
-}
-
-.av-cancel-btn {
-  color:@cancel-text;
-  background:@cancel;
-  padding:4px;
-  border:none;
-  margin-right:4px;
-  font-size:16px;
-  outline: none;
 }
 
 .av-main-colors {
@@ -124,3 +107,6 @@ html, body {
 @import "window.less";
 @import "cmdpal.less";
 @import "tree.less";
+@import "buttons.less";
+@import "glayout.less";
+@import "toolbar.less";

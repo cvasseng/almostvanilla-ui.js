@@ -5,6 +5,8 @@
     <title>Samples</title>
     
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
     <link rel="stylesheet" type="text/css" href="/css/light.css">
      
     <script type="text/javascript" src="av.min.js"></script>
@@ -17,6 +19,9 @@
     <script type="text/javascript" src="src/av.ui.window.js"></script>
     <script type="text/javascript" src="src/av.ui.cmdpal.js"></script>
     <script type="text/javascript" src="src/av.ui.tree.js"></script>
+    <script type="text/javascript" src="src/av.ui.prompt.js"></script>
+    <script type="text/javascript" src="src/av.ui.toolbar.js"></script>
+    <script type="text/javascript" src="src/av.ui.lgrid.js"></script>
      
   </head>
   <body>
@@ -28,6 +33,7 @@
   </body>
   
   <script>
+    
   
   var ctx = av.ContextMenu([
     {
@@ -58,20 +64,45 @@
     }
   }, "fmenu");
   
+  av.Toolbar([
+    {
+      'trash': {checkable: true},
+      'plus-circle': {checkable: true},
+      'file': {}
+    },
+    {
+      'user': {},
+      'users': {}
+    }
+    
+  ], "fmenu");
+  
+  
   var tabs = av.TabControl(document.body);
   
   var t1 = tabs.addTab({title: "Property Grid"}),
       t2 = tabs.addTab({title: "Tree"}),
+      t3 = tabs.addTab({title: 'Layout Grid'}),
       inspectableObject = {
         foo: 'hello',
         bar: 'world'
       },
       win = av.Window({
-        title: 'Window with list'
+        title: 'Window with list',
+        x: 400
       }),
       list = av.List(win.body),
-      tree = av.Tree(t2.body)
+      tree = av.Tree(t2.body),
+      lgrid = av.LayoutGrid(t3.body),
+      lrow = lgrid.addRow(),
+      col1 = lrow.addCol(),
+      col2 = lrow.addCol()
   ;
+  
+  col1.ap(av.cr('span', '', 'column 1'));
+  col2.ap(av.cr('span', '', 'column 2'));
+  
+  tabs.on('ShowTab', lgrid.resize);
   
   av.PropertyGrid(t1.body, av.PGRID_TABLE).inspect(
     inspectableObject,
@@ -134,13 +165,9 @@
     }
   ]);
   
-  win.on('Show', list.resize);
+  win.on('Resize', list.resize);
   
-  tabs.addTab({title: "Tab 2"}).body.innerHTML = 'tab 2!';
-  tabs.addTab({title: "Tab 3"}).body.innerHTML = 'tab 3!';
-  tabs.addTab({title: "Tab with huge caption"}).body.innerHTML = 'tab4!';
-  tabs.addTab({title: "Tab 4"}).body.innerHTML = 'tab5!';
- 
+  
   //Register a couple of commands
   av.RegCommand('foobar', function () {
     

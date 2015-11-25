@@ -11,7 +11,8 @@
     "src/av.ui.list.js",
     "src/av.ui.window.js",
     "src/av.ui.cmdpal.js",
-    "src/av.ui.tree.js"
+    "src/av.ui.tree.js",
+    "src/av.ui.prompt.js"
   ],
   "css":[],
   "less":[

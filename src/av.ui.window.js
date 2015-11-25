@@ -164,7 +164,6 @@ SOFTWARE.
     av.ap(container,
       av.ap(titlebar,
         title,
-        closer,
         undocker
       ),
       body,
@@ -173,6 +172,18 @@ SOFTWARE.
     
     mover = av.Mover(titlebar, container);
     resizer = av.Resizer(resizeh, container);
+    
+    if (properties.canClose) {
+      av.ap(titlebar, closer);
+    }
+    
+    if (!properties.canMove) {
+      mover.disable();
+    }
+    
+    if (!properties.canResize) {
+      resizer.disable();
+    }
     
     mover.on('Done', function (x, y) {
       properties.x = x;

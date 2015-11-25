@@ -34,7 +34,7 @@ SOFTWARE.
     av.ap(document.body, ctxnode);
   });
   
-  av.ContextMenu = function (meta) {
+  av.ContextMenu = function (defMeta) {
     var items = av.cr('div', ''),
         visible = false,
         events = av.events(),
@@ -43,86 +43,91 @@ SOFTWARE.
           y: 0
         }
     ;
- 
-    //Build from meta 
-    (meta || []).forEach(function (group, i) {
-      if (i > 0) {
-        av.ap(items, av.cr('div', 'separator'));        
-      }
-      
-      Object.keys(group || {}).forEach(function (key) {
-        var obj = group[key],
-            item = av.cr('div', 'item'),
-            licon = av.cr('span', 'licon'),
-            ricon = av.cr('span', 'ricon', obj.rtitle),
-            title = av.cr('span', 'title', key)          
-        ;
-        
-        function click() {
-          if (obj.checkable) {
-            obj.checked = !obj.checked;
-            if (obj.checked) {
-              licon.className = 'licon fa fa-check';            
-            } else {
-              licon.className = 'licon';            
-            }
-            if (av.isFn(obj.checkstate)) {
-              obj.checkstate(obj.checked);
-            }
-          }
   
-          events.emit('Select', obj);
-          hide();
+    function build(meta) {
+      if (!av.isArr(meta)) return;
+      items.innerHTML = '';
+      //Build from meta 
+      (meta || []).forEach(function (group, i) {
+        if (i > 0) {
+          av.ap(items, av.cr('div', 'separator'));        
         }
         
-        obj.doclick = click;
-        
-        obj.check = function () {
-          obj.checked = true;
-          licon.className = 'licon fa fa-check'; 
-        };
-        
-        obj.uncheck = function () {
-          obj.checked = false;
-          licon.className = 'licon'; 
-        };
-        
-        if (key.indexOf('-') >= 0) {
-          av.ap(items, av.cr('div', 'separator'));
-          return;
-        }
-        
-        if (obj.ricon) {
-          ricon.className = 'ricon fa fa-' + obj.ricon;
-        }
-        
-        if (obj.licon) {
-          licon.className = 'licon fa fa-' + obj.licon;
-        }
-        
-        av.on(item, 'click', obj.click || false);      
-        
-        av.on(item, 'click', function () {
-          click();
+        Object.keys(group || {}).forEach(function (key) {
+          var obj = group[key],
+              item = av.cr('div', 'item'),
+              licon = av.cr('span', 'licon'),
+              ricon = av.cr('span', 'ricon', obj.rtitle),
+              title = av.cr('span', 'title', key)          
+          ;
+          
+          function click() {
+            if (obj.checkable) {
+              obj.checked = !obj.checked;
+              if (obj.checked) {
+                licon.className = 'licon fa fa-check';            
+              } else {
+                licon.className = 'licon';            
+              }
+              if (av.isFn(obj.checkstate)) {
+                obj.checkstate(obj.checked);
+              }
+            }
+    
+            events.emit('Select', obj);
+            hide();
+          }
+          
+          obj.doclick = click;
+          
+          obj.check = function () {
+            obj.checked = true;
+            licon.className = 'licon fa fa-check'; 
+          };
+          
+          obj.uncheck = function () {
+            obj.checked = false;
+            licon.className = 'licon'; 
+          };
+          
+          if (key.indexOf('-') >= 0) {
+            av.ap(items, av.cr('div', 'separator'));
+            return;
+          }
+          
+          if (obj.ricon) {
+            ricon.className = 'ricon fa fa-' + obj.ricon;
+          }
+          
+          if (obj.licon) {
+            licon.className = 'licon fa fa-' + obj.licon;
+          }
+          
+          av.on(item, 'click', obj.click || false);      
+          
+          av.on(item, 'click', function () {
+            click();
+          });
+          
+          if (obj.checkable && obj.checked) {
+            licon.className = 'licon fa fa-check';
+          }
+          
+          if (av.isFn(obj.create)) {
+            obj.create(obj);
+          }
+          
+          av.ap(items, 
+            av.ap(item,
+              licon,
+              title,
+              ricon
+            )
+          );  
         });
-        
-        if (obj.checkable && obj.checked) {
-          licon.className = 'licon fa fa-check';
-        }
-        
-        if (av.isFn(obj.create)) {
-          obj.create(obj);
-        }
-        
-        av.ap(items, 
-          av.ap(item,
-            licon,
-            title,
-            ricon
-          )
-        );  
       });
-    });
+    
+    };
     ///////////////////////////////////////////////////////////////////////////
   
     function show(x, y) {
@@ -172,8 +177,11 @@ SOFTWARE.
   
     ///////////////////////////////////////////////////////////////////////////
     
+    build(defMeta);
+    
     return {
       on: events.on,
+      build: build,
       show: show,
       hide: hide,
       toggle: toggle,

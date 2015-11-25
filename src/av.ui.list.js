@@ -39,7 +39,7 @@ av.List = function (parent, attrs) {
       }, attrs),
       events = av.events(),
       container = av.cr('div', 'av-list'),
-      itemsNode = av.cr('div', 'items'),
+      itemsNode = av.cr('div', 'av-prettyscroll items'),
       iconBar = av.cr('div', 'icons'),
       selection = [],
       selectedItem = false

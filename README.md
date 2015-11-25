@@ -15,7 +15,7 @@ being lightweight (both in size and in implementation), and easy to deal with.
 Does the world really need another JS UI library? Probably not.
 But personally, I strongly prefer to work with this style of interfaces over
 e.g. pre-processor heavy libraries that mixes JavaScript and HTML, or 
-libraries that's written using more traditional OOP concepts rather than being written in a more functional manner.
+libraries written using more traditional OOP concepts rather than being written in a more functional manner.
  
 I built this for myself, to sped up development of web apps. Maybe it will speed things up for you too. 
 
@@ -31,6 +31,7 @@ I built this for myself, to sped up development of web apps. Maybe it will speed
   * `av.CommandPalette` (console-ish input, like the command palette in sublime/vscode/etc)
   * `av.List`
   * `av.Tree`
+  * `av.Prompt`
   
 ## Getting started
 

@@ -4,10 +4,11 @@
 
 .av-tabctrl .tabs {
   background-color: @dim-background;
+  border-bottom:@dim-border;
   color:@dim-text;
   position:relative;
   font-size:20px;
-  height:40px;
+  height:50px;
   overflow:hidden;
   .av-stretch;
 }
@@ -21,18 +22,20 @@
 .av-tabctrl .tab {
   font-weight:100;
   float:left;
-  padding:4px;
-  margin-right:5px;
-  min-width: 80px;
+  padding:0px;
+  margin-right:20px;
   text-align: center;
+  line-height: 50px;
   height:100%;
   .av-box-size;
 }
 
+.av-tabctrl .tab:hover {
+  color: @highlight-text;
+}
+
 .av-tabctrl .tab-selected {
-  font-weight:400;
-  padding-left:2px;
-  padding-right:2px;
+  //font-weight:400;
   //background: @accent;
   color: @highlight-text;
 }
@@ -50,4 +53,35 @@
   bottom:0px;
   position:absolute;
   background:@accent;
+}
+
+.av-tabctrl .chooser:hover {
+  background:@accent;
+  color: @accent-text; 
+}
+
+.av-tabctrl .chooser {
+  line-height:50px;
+  text-align:center;
+  position:absolute;
+  right:0px;
+  top:0px;
+  width:30px;
+  height:100%;
+}
+
+.av-tabctrl .adder:hover {
+   background:@accent;
+  color: @accent-text;
+}
+
+.av-tabctrl .adder {
+  position:absolute;
+  right:30px;
+  top:0px;
+  line-height:50px;
+  text-align:center;
+  width:30px;
+  height:100%;
+  float:left;
 }

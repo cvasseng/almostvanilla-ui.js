@@ -26,14 +26,21 @@ SOFTWARE.
 
 ******************************************************************************/
 
-av.TabControl = function (parent, noBodies) {
-  var events = av.events(),
+av.TabControl = function (parent, attributes) {
+  var properties = av.merge({
+        nodBodies: false,
+        showAdder: true  
+      }, attributes),
+      events = av.events(),
       container = av.cr('div', 'av-tabctrl'),
       headings = av.cr('div', 'tabs'),
       body = av.cr('div', 'tab-bodies'),
       marker = av.cr('div', 'av-transition tab-marker'),
+      chooser = av.cr('div', 'av-transition chooser fa fa-chevron-down'),
+      adder = av.cr('div', 'av-transition adder fa fa-plus-circle'),
       tabs = [],
-      openTab = false
+      openTab = false,
+      ctx = av.ContextMenu()
   ;
 
   /////////////////////////////////////////////////////////////////////////////
@@ -59,7 +66,24 @@ av.TabControl = function (parent, noBodies) {
   }
 
   function resize() {
+    var psize = av.size(parent);
+    av.style(body, {
+      
+    });
+  }
+  
+  function buildCTX() {
+    var meta = {};
     
+    tabs.forEach(function (tab) {
+      meta[tab.meta.title] = {
+        click: function () {
+          showTab(tab.meta);
+        }
+      };
+    });
+    
+    ctx.build([meta]);
   }
 
   function addTab(meta) {
@@ -73,7 +97,8 @@ av.TabControl = function (parent, noBodies) {
     });
     
     av.ap(headings, itmHeader);
-    if (!noBodies) {
+    
+    if (!properties.noBodies) {
       av.ap(body, itmBody);      
     }
     
@@ -90,7 +115,11 @@ av.TabControl = function (parent, noBodies) {
     events.emit('AddTab', res);
     
     tabs.push(res);
-    showTab(meta);
+    av.ready(function () {
+      showTab(meta);      
+    });
+    
+    buildCTX();
     
     return res;      
   }
@@ -112,18 +141,20 @@ av.TabControl = function (parent, noBodies) {
       openTab = tab;
       tab.header.className = 'av-transition tab tab-selected';
       
-      if (!noBodies) {
+      if (!properties.noBodies) {
         av.style(tab.body, {
           display: 'block'  
         });        
       }
+      
+      events.emit('ShowTab', tab);
       
       av.style(marker, {
         left: av.pos(tab.header).x + 'px',
         width: av.size(tab.header).w + 'px'
       });
       
-      events.emit('ShowTab', tab);
+      
     });
   }
 
@@ -133,12 +164,26 @@ av.TabControl = function (parent, noBodies) {
     av.ap(parent, 
       av.ap(container,
         av.ap(headings,
-          marker
+          marker,
+          chooser
         ),
         body
       )
     );      
+    
+    if (properties.showAdder) {
+      av.ap(headings, adder);
+    }
+    
     resize();
+  });
+  
+  av.on(adder, 'click', function () {
+    events.emit('AddRequest');
+  });
+  
+  av.on(chooser, 'click', function (e) {
+    ctx.show(e.clientX, e.clientY);  
   });
 
   return {
