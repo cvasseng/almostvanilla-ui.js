@@ -28,7 +28,8 @@ SOFTWARE.
 
 av.LayoutGrid = function (parent) {
   var container = av.cr('div', 'av-layout-grid'),
-      rows = []
+      rows = [],
+      rsizers = []
   ;
   
   //Add a row to the grid 
@@ -37,7 +38,8 @@ av.LayoutGrid = function (parent) {
         rsize = av.size(row),
         sizers = [],
         columns = [],
-        ret = {}
+        ret = {},
+        cevents = av.events()
     ;
     
     //Add a column to the row
@@ -55,6 +57,8 @@ av.LayoutGrid = function (parent) {
       av.ap(row, node);
       
       col = {
+        events: cevents,
+        node: node,
         size: {w: 0, h: 0},
         ap: function () {
           av.ap.apply(undefined, [node].concat(Array.prototype.slice.call(arguments)));
@@ -72,6 +76,8 @@ av.LayoutGrid = function (parent) {
       createColSizers();
       
       return {
+        on: cevents.on,
+        node: node,
         ap: col.ap,
         resize: col.resize 
       };
@@ -81,44 +87,63 @@ av.LayoutGrid = function (parent) {
       var x = 0;
       
       //Destroy the sizers
-      sizers.forEach(function (sizer) {
-        sizer.n.parentNode.removeChild(sizer.n);
-        sizer.sizer.destroy();
+      sizers = sizers.filter(function (sizer) {
+        sizer.node.parentNode.removeChild(sizer.node);
+        return false;
       });
       
       //Create sizers
       for (var i = 0; i < columns.length - 1; i++) {
         //Place the sizer at columns[i].w
-        (function (col) {
+        (function (col, colnext) {
           var n = av.cr('div', 'lg-vsizer'),
-              sizer = av.Mover(n, n, 'X')
+              sizer = av.Mover(n, n, 'X'),
+              myIndex = sizers.length,
+              ox = x//,
+              //x = av.pos(col.node).x
           ;  
-          
-          av.style(n, {
-            left: x + col.size.w + 'px'
-          });
           
           x += col.size.w;
           
-          sizer.on('Moving', function (nx, ny) {
-            col.size = nx - x;
+          function update(nx) {
+            var total = col.size.w + colnext.size.w;
+            col.size.w = nx - av.pos(col.node).x;
+            colnext.size.w = total - col.size.w;
             col.resize();  
+            colnext.resize(); 
+            
+            col.events.emit('Resize');                       
+          }
+          
+          sizer.on('Start', function () {
+            av.style(n, {
+              height: col.size.h + 'px'  
+            });
           });
           
-          av.ap(container, n);
+          sizer.on('Moving', update);
+          sizer.on('Done', update);
+          
+          av.ap(row, n);
+          
+          av.style(n, {
+            left: ox + col.size.w + 'px',
+            height: col.size.h + 'px'
+          });
           
           sizers.push({
             node: n,
             sizer: sizer
           });
-        })(columns[i]);
+        })(columns[i], columns[i + 1]);
       }        
     }
     
     function resizeRow() {
       var assigned = 0,
           squeue = [],
-          psize = av.size(container)
+          psize = av.size(container),
+          height = 0
       ;
       
       av.style(row, {
@@ -140,29 +165,93 @@ av.LayoutGrid = function (parent) {
       squeue.forEach(function (c) {
         c.size.w = (rsize.w - assigned) / squeue.length;
         c.size.h = 200;  
-        console.log(rsize);
       });
       
       columns.forEach(function (c) {
+        if (rsize.h === 0) {
+          if (c.size.h > height) {
+            height = c.size.h;
+          }
+        } else {
+          c.size.h = rsize.h;
+        }
         c.resize();
       });
+      
+      if (rsize.h === 0) {
+        av.style(row, {
+          height: height + 'px'  
+        });        
+      }
+      
+      createColSizers();
     }
     
     av.ap(container, row);
     
     ret = {
+      node: row,
       addCol: addCol,
       resize: resizeRow
     };
     
     rows.push(ret);
+    createRowSizers();
     return ret;
+  }
+  
+  function createRowSizers() {
+    rsizers = rsizers.filter(function (row) {
+      row.node.parentNode.removeChild(row.node);
+      return false;
+    });  
+    
+    
+    for (var i = 0; i < rows.length - 1; i++) {
+      (function (row, rownext) {
+        var n = av.cr('div', 'lg-hsizer'),
+            sizer = av.Mover(n, n, 'Y')
+        ;
+        
+        av.style(n, {
+          top: av.pos(row.node).y + av.size(row.node).h + 'px' 
+        });
+        
+        sizer.on('Moving', function (nx, ny) {
+          var rs = av.pos(row.node),          
+              total = av.size(row.node).h + av.size(rownext.node).h
+          ;
+          
+          av.style(row.node, {
+            height: ny - rs.y + 'px'  
+          });
+          
+          av.style(rownext.node, {
+            height: total - (ny - rs.y) + 'px' 
+          });
+            
+          row.resize();   
+          rownext.resize();
+            
+        });
+        
+        av.ap(container, n);
+        
+        rsizers.push({
+          node: n,
+          sizer: sizer
+        });
+        
+      })(rows[i], rows[i + 1]);
+    }
+    
   }
   
   function resize() {
     rows.forEach(function (r) {
       r.resize();
     });
+    createRowSizers();
   }
   
   av.ready(function () {

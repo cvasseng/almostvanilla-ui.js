@@ -89,18 +89,37 @@
       },
       win = av.Window({
         title: 'Window with list',
-        x: 400
+        x: 400,
+        y:800
       }),
       list = av.List(win.body),
       tree = av.Tree(t2.body),
       lgrid = av.LayoutGrid(t3.body),
       lrow = lgrid.addRow(),
+      lrow2 = lgrid.addRow(),
       col1 = lrow.addCol(),
-      col2 = lrow.addCol()
+      col2 = lrow.addCol(),
+      col3 = lrow.addCol(),
+      
+      r2col1 = lrow2.addCol(),
+      r2col2 = lrow2.addCol()
   ;
   
+
+
   col1.ap(av.cr('span', '', 'column 1'));
   col2.ap(av.cr('span', '', 'column 2'));
+  col3.ap(av.cr('span', '', 'column 3'));
+  
+  col1.node.style.background = "#FF0000";
+  col2.node.style.background = "#00FF00";
+  col3.node.style.background = "#0000FF";
+  
+  r2col1.ap(av.cr('span', '', 'row 2, column 1'));
+  r2col2.ap(av.cr('span', '', 'row 2, column 2'));
+  
+  r2col1.node.style.background = "#0000FF";
+  r2col2.node.style.background = "#00FF00";
   
   tabs.on('ShowTab', lgrid.resize);
   
