@@ -39,7 +39,7 @@ av.LayoutGrid = function (parent) {
         sizers = [],
         columns = [],
         ret = {},
-        cevents = av.events()
+        revents = av.events()
     ;
     
     //Add a column to the row
@@ -51,7 +51,8 @@ av.LayoutGrid = function (parent) {
     */
     function addCol(props) {
       var node = av.cr('div', 'lg-col'),
-          col = {}
+          col = {},
+          cevents = av.events()
       ;
       
       av.ap(row, node);
@@ -175,6 +176,9 @@ av.LayoutGrid = function (parent) {
         } else {
           c.size.h = rsize.h;
         }
+        if (columns.length == 1) {
+          c.size.w = rsize.w;
+        }
         c.resize();
       });
       
@@ -184,12 +188,14 @@ av.LayoutGrid = function (parent) {
         });        
       }
       
+      revents.emit('Resize');
       createColSizers();
     }
     
     av.ap(container, row);
     
     ret = {
+      on: revents.on,
       node: row,
       addCol: addCol,
       resize: resizeRow

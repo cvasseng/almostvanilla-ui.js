@@ -192,6 +192,7 @@ av.Tree = function(parent, attrs) {
   });
   
   return {
+    resize: resize,
     on: events.on,
     load: load,
     clear: clear,
