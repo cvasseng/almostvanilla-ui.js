@@ -14,7 +14,8 @@
     "src/av.ui.tree.js",
     "src/av.ui.toolbar.js",
     "src/av.ui.lgrid.js",
-    "src/av.ui.prompt.js"
+    "src/av.ui.prompt.js",
+    "src/av.ui.table.js"
   ],
   "css":[],
   "less":[

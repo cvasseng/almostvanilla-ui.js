@@ -109,6 +109,9 @@ av.List = function (parent, attrs) {
         item.className = 'item item-selected';
         selectedItem = item;
         events.emit('Select', meta);
+        if (av.isFn(meta.click)) {
+          meta.click();
+        }
       });
     }
     

@@ -29,7 +29,7 @@ SOFTWARE.
 av.PGRID_TABLE = 1;
 av.PGRID_FORM = 2;
 
-av.PropertyGrid = function (parent, gtype) {
+av.PropertyGrid = function (parent, gtype, onlyUseMetaDefined) {
   var container = av.cr('table', 'av-property-grid'),
       events = av.events(),
       callbacks = []
@@ -79,7 +79,11 @@ av.PropertyGrid = function (parent, gtype) {
             dropdown: function () {
               editor = av.cr('select', 'stretch pg-editor');
               (meta[key].options || []).forEach(function (k) {
-                av.ap(editor, av.cr('option', '', k.title, k.id));
+                var n = av.cr('option', '', k.title, k.id);
+                av.ap(editor, n);
+                if (obj[key] == k.id) {
+                  n.selected = 'selected';
+                }
               });
             },
             button: function () {
@@ -104,13 +108,19 @@ av.PropertyGrid = function (parent, gtype) {
       
       tcol.valign = 'top';
       
-      if (!av.isBasic(obj[key])) {
-        inspect(obj[key], (meta || {})[key], fn, meta && meta[key] ? meta[key].title || key : key, true, true);
+      if (!av.isBasic(obj[key]) && !onlyUseMetaDefined) {
+        inspect(obj[key], (meta || {})[key], fn, meta && meta[key] ? meta[key].title || key : key, true, true);          
         return;
       }
+
+      // if (av.isArr(obj[key]) && !meta[key]) {
+      //   return;
+      // }
       
       if (meta && meta[key]) {
         tcol.innerHTML = meta[key].title || key; 
+      } else if (onlyUseMetaDefined) {
+        return;
       }
       
       if (meta && meta[key] && tps[meta[key].type]) {
@@ -123,7 +133,11 @@ av.PropertyGrid = function (parent, gtype) {
         av.ap(dcol, editor);
         
         av.on(editor, 'change', function () {
-          obj[key] = editor.value;
+          if (meta[key].type === 'checkbox') {
+            obj[key] = editor.checked;
+          } else {
+            obj[key] = editor.value;
+          }
           if (av.isFn(fn)) {
             fn(obj, key);
           }

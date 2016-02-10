@@ -1,0 +1,40 @@
+.av-table {
+	width: 100%;
+  //border: @border;
+}
+
+.av-table th {
+  font-weight:100;
+  font-size:18px;
+  height:30px;
+  border-bottom:@border;
+  text-align:left;
+  padding-left:4px;
+}
+
+.av-table tr {
+  height:30px;
+  .av-transition;
+}
+
+.av-table td {
+  margin:0;
+  font-size:12px;
+  padding-left:4px;
+}
+
+.av-table tr:hover {
+  background-color:@highlight-background !important;
+}
+
+.av-table tr:nth-child(even) { 
+  color:@text;
+  background-color:@background; 
+  width:100px;
+}
+
+.av-table tr:nth-child(odd) { 
+  color:@dim-text;
+  background-color:@dim-background; 
+  width:100px;
+}
