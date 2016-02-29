@@ -35,7 +35,7 @@
     txt.innerHTML = title;
     //win.setTitle(title);
     
-    inp.value = '';
+    inp.value = value;
     
     if (cb) {
       cb();

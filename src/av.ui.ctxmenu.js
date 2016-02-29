@@ -45,7 +45,9 @@ SOFTWARE.
     ;
   
     function build(meta) {
-      if (!av.isArr(meta)) return;
+      if (!av.isArr(meta)) {        
+        return;
+      }
       items.innerHTML = '';
       //Build from meta 
       (meta || []).forEach(function (group, i) {

@@ -32,6 +32,11 @@ av.FileMenu = function (meta, parent) {
       events = av.events()
   ;
 
+  function addToParent() {
+    if (av.isStr(parent)) parent = document.getElementById(parent);
+    av.ap(parent || document.body, container);   
+  }
+
   Object.keys(meta || {}).forEach(function (key) {
     var obj = meta[key],
         item = av.cr('span', 'item', key),
@@ -72,11 +77,7 @@ av.FileMenu = function (meta, parent) {
     av.ap(container, item);
   });
 
-  //Append to body when ready
-  av.ready(function () {
-    if (av.isStr(parent)) parent = document.getElementById(parent);
-    av.ap(parent || document.body, container);    
-  });
+  av.ready(addToParent);    
   
   return {
     on: events.on
