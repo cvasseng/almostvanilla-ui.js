@@ -32,6 +32,8 @@ I built this for myself, to sped up development of web apps. Maybe it will speed
   * `av.List`
   * `av.Tree`
   * `av.Prompt`
+  * `av.Sidebar`
+  * `av.Table`
   
 ## Getting started
 

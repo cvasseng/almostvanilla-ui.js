@@ -16,10 +16,12 @@
     "src/av.ui.lgrid.js",
     "src/av.ui.prompt.js",
     "src/av.ui.sidebar.js",
+    "src/av.ui.teditor.js",
     "src/av.ui.table.js"
   ],
   "css":[],
   "less":[
-    "less/light.less"
+    "less/light.less",
+    "less/dark.less"
   ]
 }
